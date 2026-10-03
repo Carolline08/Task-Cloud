@@ -1,117 +1,94 @@
-# Task-Cloud
-# Sabor do Sertão — Painel de Análise de Dados com Streamlit
+# Task-Cloud: Rede Sabor do Sertão 🌵
+# Sabor do Sertão — Painel de Análise de Dados com Streamlit e Nuvem
 
 ## Sobre o projeto
-
-Este projeto consiste no desenvolvimento de um painel interativo para análise de vendas da rede fictícia de lanchonetes **Sabor do Sertão**.
+Este projeto consiste no desenvolvimento e implantação em nuvem de um painel interativo para análise de vendas da rede de lanchonetes **Sabor do Sertão**.
 
 O painel foi desenvolvido para analisar um ano de dados de vendas das lojas localizadas em **Recife, Olinda, Caruaru, Petrolina e Garanhuns**, permitindo visualizar informações sobre faturamento, produtos, cidades, períodos de venda e formas de pagamento.
 
-O objetivo é transformar os dados de vendas em informações visuais que possam auxiliar na análise e na tomada de decisões.
+O objetivo é transformar os dados de vendas em informações visuais que possam auxiliar na análise, governança e na tomada de decisões estratégicas da diretoria.
+
+
+## Implantação e Infraestrutura em Nuvem (Cloud)
+Para comprovar os requisitos de computação em nuvem exigidos na atividade, o painel foi implantado e está disponível publicamente:
+*   **Link de Acesso Direto:** [http://20.226.59.85:8501](http://20.226.59.85:8501)
+*   **Provedor de Nuvem:** Microsoft Azure (IaaS).
+*   **Infraestrutura:** Instância de Máquina Virtual executando Linux Ubuntu 24.04 LTS.
+*   **Segurança e Redes:** Configuração de Grupo de Segurança de Rede (NSG) com a abertura de regra de entrada para tráfego na porta **TCP 8501**.
+
 
 ## Tecnologias utilizadas
-
-- Python 3.10+
+- Python 3.12+
 - Streamlit
 - Pandas
-- Plotly
+- Plotly Express
 - NumPy
 
-## Funcionalidades
+---
 
-### Exploração dos dados
+## Funcionalidades e Modificações Visuais
 
-- Visualização das primeiras linhas do conjunto de dados;
-- Resumo estatístico dos dados;
-- Identificação de valores ausentes;
-- Tratamento dos valores ausentes da coluna de avaliação.
+### Design Regional Customizado
+O painel foi completamente reformulado com uma estilização CSS personalizada usando uma **paleta de cores regional em tons de terra, terracota, tangerina e areia**, trazendo a identidade visual acolhedora do Sertão Nordestino para a interface técnica.
 
-### Indicadores principais
+### Geração Resiliente de Dados
+O código foi modificado com um bloco de tratamento (`try/except`). Caso a planilha física `vendas.csv` não seja encontrada na pasta, o próprio algoritmo **gera de forma automatizada 5.000 registros comerciais fictícios em memória** consistentes com a realidade de operação da lanchonete, garantindo estabilidade e funcionamento ininterrupto da aplicação na nuvem.
 
-O painel apresenta quatro indicadores (KPIs):
-
-- **Faturamento total**
-- **Número de vendas**
-- **Ticket médio**
-- **Avaliação média**
+### Indicadores principais (KPIs)
+O painel apresenta três indicadores estratégicos renderizados em cartões (*cards*) estilizados com bordas em terracota:
+- **Faturamento total acumulado**
+- **Volume total de pedidos**
+- **Ticket médio por pedido**
 
 ### Filtros
+Os dados podem ser filtrados de forma dinâmica na barra lateral esquerda por:
+- Unidades de Cidades da rede.
 
-Os dados podem ser filtrados por:
+Os filtros propagam-se automaticamente, alterando de forma simultânea todos os indicadores e os gráficos do painel.
 
-- Cidade;
-- Categoria;
-- Intervalo de datas.
-
-Os filtros são aplicados aos indicadores e aos gráficos do painel.
-
-### Visualizações
-
-O projeto possui gráficos interativos para:
-
-1. Faturamento mensal;
-2. Faturamento por cidade;
-3. Top 5 produtos mais vendidos em quantidade;
-4. Participação das formas de pagamento.
-
-Também pode ser utilizado um mapa de calor para analisar as vendas de acordo com o dia da semana e o horário.
+### Visualizações e Abas
+O projeto foi segmentado de forma limpa em abas de navegação para melhorar a experiência do usuário (*UX*):
+1.  **Desempenho de Cardápio:** Gráfico de barras horizontal mostrando as unidades vendidas por item.
+2.  **Análise de Unidades:** Gráfico comparativo de faturamento por cidade.
+3.  **Evolução & Pagamentos:** Linha do tempo de faturamento mensal combinada com a participação percentual das formas de pagamento em gráfico de pizza.
 
 ### Insights
+O painel apresenta conclusões diretas obtidas a partir dos dados comerciais, destacando a liderança de faturamento da unidade de Recife, a alta adesão dos pratos *Tapioca Completa* e *Bolo de Rolo*, e a predominância do *Pix* como meio de pagamento.
 
-O painel apresenta conclusões obtidas a partir dos dados, permitindo identificar padrões e informações relevantes para um gestor.
 
-Também é possível realizar o **download do conjunto de dados já filtrado** em formato CSV.
-
-## Estrutura do projeto
-
-sabor-do-sertao/
+## Estrutura do projeto na VM
+```text
+sabor_sertao/
 │
-├── app.py
-├── gerar_dados.py
-├── requirements.txt
-├── dados_vendas.csv
-└── README.md
+├── app.py          # Código-fonte principal com regras visuais e dados internos
+└── README.md       # Documentação técnica do projeto
+```
 
-## Como executar o projeto
+## Como executar o projeto localmente
 
 ### 1. Clone o repositório
-
-git clone URL_DO_SEU_REPOSITORIO
+```bash
+git clone https://github.com
+```
 
 ### 2. Entre na pasta do projeto
-
-cd sabor-do-sertao
+```bash
+cd Task-Cloud
+```
 
 ### 3. Instale as dependências
+```bash
+pip install streamlit pandas plotly numpy
+```
 
-pip install -r requirements.txt
-
-### 4. Gere os dados
-
-Execute o arquivo responsável pela geração dos dados:
-
-python gerar_dados.py
-
-### 5. Execute o Streamlit
-
-streamlit run app.py
-
-## Objetivo da análise
-
-O painel busca responder perguntas como:
-
-- Em qual cidade a rede vende mais?
-- Quais produtos possuem maior volume de vendas?
-- Em quais períodos o faturamento é maior?
-- Quais são as formas de pagamento mais utilizadas?
-- Quais padrões podem ser identificados nos dados?
+### 4. Execute o Streamlit apontando para o IP do seu servidor
+```bash
+python3 -m streamlit run app.py --server.address 0.0.0.0
+```
 
 ## Projeto acadêmico
-
-Este projeto foi desenvolvido como atividade prática utilizando **Pair Programming**, com foco em análise e visualização de dados utilizando Python.
+Este projeto foi desenvolvido como atividade prática utilizando a metodologia de **Pair Programming** (Programação em Dupla), com foco em conciliação de dados, engenharia de nuvem, governança de redes e desenvolvimento front-end com Python.
 
 ## Autores
-
-**Abigail Maria Nazário e Carolline Barbosa Ferreira**
-
-Projeto desenvolvido em dupla durante a atividade prática de análise de dados.
+*   **Abigail Maria Nazário**
+*   **Carolline Barbosa Ferreira**
